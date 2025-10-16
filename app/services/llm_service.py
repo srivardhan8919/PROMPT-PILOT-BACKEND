@@ -67,7 +67,7 @@ class LLMService:
             return jsonify({"message": "Google API key is not configured"}), 500
         try:
             genai.configure(api_key=api_key)
-            model = genai.GenerativeModel('gemini-1.5-flash-latest')
+            model = genai.GenerativeModel('gemini-2.5-flash')
             full_instruction = PROMPT_INSTRUCTIONS.format(user_prompt=simple_prompt)
             response = model.generate_content(full_instruction)
             return jsonify({"improved_prompt": response.text.strip()})
@@ -83,7 +83,7 @@ class LLMService:
             full_instruction = PROMPT_INSTRUCTIONS.format(user_prompt=simple_prompt)
             chat_completion = client.chat.completions.create(
                 messages=[{"role": "user", "content": full_instruction}],
-                model="llama3-8b-8192",
+                model="llama-3.1-8b-instant",
             )
             return jsonify({"improved_prompt": chat_completion.choices[0].message.content.strip()})
         except Exception as e:
